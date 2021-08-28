@@ -29,7 +29,7 @@ app.MapPost("/predict", async (MLModel1.ModelInput modelInput, PredictionEngineP
     MLModel1.ModelOutput prediction = predictionEnginePool.Predict(modelInput);
 
     // Return prediction as response
-    return Results.Json(prediction);
+    return prediction;
 });
 
 app.Run();
