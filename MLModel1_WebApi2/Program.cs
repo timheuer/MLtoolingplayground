@@ -6,10 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPredictionEnginePool<MLModel1.ModelInput, MLModel1.ModelOutput>().FromFile("MLModel1.zip");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthorization();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new() { Title = "MLModel1", Version = "v1" });
-});
+builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new() { Title = "MLModel1", Version = "v1" }));
 
 var app = builder.Build();
 
@@ -23,13 +20,10 @@ if (builder.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
-app.MapPost("/predict", async (MLModel1.ModelInput modelInput, PredictionEnginePool<MLModel1.ModelInput, MLModel1.ModelOutput> predictionEnginePool) =>
+app.MapPost("/predict", (MLModel1.ModelInput modelInput, PredictionEnginePool<MLModel1.ModelInput, MLModel1.ModelOutput> predictionEnginePool) =>
 {
-    // Predict
-    MLModel1.ModelOutput prediction = predictionEnginePool.Predict(modelInput);
-
-    // Return prediction as response
-    return prediction;
+    // Predict and return result
+    return predictionEnginePool.Predict(modelInput);
 });
 
 app.Run();
