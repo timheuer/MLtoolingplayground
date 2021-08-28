@@ -20,10 +20,6 @@ if (builder.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
-app.MapPost("/predict", (MLModel1.ModelInput modelInput, PredictionEnginePool<MLModel1.ModelInput, MLModel1.ModelOutput> predictionEnginePool) =>
-{
-    // Predict and return result
-    return predictionEnginePool.Predict(modelInput);
-});
+app.MapPost("/predict", (MLModel1.ModelInput modelInput, PredictionEnginePool<MLModel1.ModelInput, MLModel1.ModelOutput> predictionEnginePool) => predictionEnginePool.Predict(modelInput));
 
 app.Run();
